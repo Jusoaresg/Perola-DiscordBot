@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/FedorLap2006/disgolf"
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"os/signal"
@@ -12,16 +13,15 @@ import (
 )
 
 // INIT: init env variables
-/*func init() {
-	err := dotenv.Load(".env")
+func init() {
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Panic(fmt.Errorf("error on loading .env: %w", err))
 	}
-}*/
+}
 
 func main() {
-	//dc, err := disgolf.New( /*os.Getenv("BOT_TOKEN")*/ "MTEzMDY5NTY4MTE4MzU4ODQ0Mg.GfNigz.JUYJoi8mNfb6y5VVHoEJk8B5l3Bg8rg8B_8jfo")
-	dc, err := disgolf.New("MTEzMDY5NTY4MTE4MzU4ODQ0Mg.GfNigz.JUYJoi8mNfb6y5VVHoEJk8B5l3Bg8rg8B_8jfo")
+	dc, err := disgolf.New(os.Getenv("BOT_TOKEN"))
 	if err != nil {
 		log.Panic(fmt.Errorf("failed to create bot: %w", err))
 	}

@@ -17,6 +17,7 @@ var perPage int                // Variável global para armazenar a quantidade d
 
 func ListPhrases(ctx *disgolf.Ctx) {
 	database, err := db.OpenDb()
+	defer db.CloseDB(database)
 	if err != nil {
 		return
 	}

@@ -15,6 +15,7 @@ func DeletePhrase(ctx *disgolf.Ctx) {
 	phraseDel := options["phrase"].StringValue()
 
 	database, err := db.OpenDb()
+	defer db.CloseDB(database)
 	if err != nil {
 		return
 	}

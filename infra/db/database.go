@@ -3,13 +3,18 @@ package db
 import (
 	"DiscordBot/infra/entity"
 	"errors"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
 )
 
 // AutoMigrate caso necessario
 func InitDB() (*gorm.DB, error) {
-	db, err := gorm.Open(sqlite.Open("infra/db/sql.db"), &gorm.Config{})
+	dsn := os.Getenv("DATA_BASE_DSN")
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  dsn,
+		PreferSimpleProtocol: true,
+	}))
 	if err != nil {
 		return nil, errors.New("error on open database")
 	}
@@ -21,15 +26,27 @@ func InitDB() (*gorm.DB, error) {
 }
 
 func OpenDb() (*gorm.DB, error) {
-	db, err := gorm.Open(sqlite.Open("sql.db"), &gorm.Config{})
+	dsn := "postgres://ozoyzsaq:DN4VL5A1zUhezN1ajN1OP3B2n-03uTMq@motty.db.elephantsql.com/ozoyzsaq"
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  dsn,
+		PreferSimpleProtocol: true,
+	}))
 	if err != nil {
 		return nil, errors.New("error on open database")
 	}
-	err = db.AutoMigrate(&entity.GuildEntity{}, &entity.Phrase{})
-	if err != nil {
-		return nil, errors.New("error on migrate")
-	}
 	return db, nil
+}
+
+func CloseDB(db *gorm.DB) error {
+	database, err := db.DB()
+	if err != nil {
+		return errors.New("Error on get sql db")
+	}
+	err = database.Close()
+	if err != nil {
+		return errors.New("Error on close db")
+	}
+	return nil
 }
 
 func SearchIfGuildExist(db *gorm.DB, guildId string, serverName string) (*gorm.DB, error) {

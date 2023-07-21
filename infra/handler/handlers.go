@@ -18,7 +18,8 @@ func Handlers(dc *disgolf.Bot) {
 
 	// Bot enter server
 	dc.AddHandler(func(s *discordgo.Session, g *discordgo.GuildCreate) {
-		database, err := db.OpenDb()
+		database, err := db.InitDB()
+		defer db.CloseDB(database)
 		guildID := g.ID
 		serverName := g.Name
 

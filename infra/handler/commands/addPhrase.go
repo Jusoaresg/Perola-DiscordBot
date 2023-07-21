@@ -1,13 +1,12 @@
 package commands
 
 import (
+	"DiscordBot/infra/db"
 	"DiscordBot/infra/embedMessages"
 	"DiscordBot/infra/entity"
 	"fmt"
 	"github.com/FedorLap2006/disgolf"
 	"github.com/bwmarrin/discordgo"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -17,13 +16,14 @@ func AddPhrase(ctx *disgolf.Ctx) {
 	autor := options["creator"].UserValue(ctx.Session).Mention()
 	phrase := options["phrase"].StringValue()
 
-	db, err := gorm.Open(sqlite.Open("sql.db"), &gorm.Config{})
+	database, err := db.OpenDb()
 	if err != nil {
 		return
 	}
+	defer db.CloseDB(database)
 
 	var guild entity.GuildEntity
-	err = db.Where("guild_id = ?", ctx.Interaction.GuildID).Preload("Phrases").First(&guild).Error
+	err = database.Where("guild_id=?", ctx.Interaction.GuildID).Preload("Phrases").First(&guild).Error
 	if err != nil {
 		fmt.Println("Erro ao recuperar o GuildEntity:", err)
 		return
@@ -37,8 +37,14 @@ func AddPhrase(ctx *disgolf.Ctx) {
 		CreatedAt: time.Now(),
 	}
 
+	err = database.Create(&frase).Error
+	if err != nil {
+		fmt.Println("Erro ao criar frase:", err)
+		return
+	}
+
 	guild.Phrases = append(guild.Phrases, frase)
-	err = db.Save(&guild.Phrases).Error
+	err = database.Save(&guild).Error
 	if err != nil {
 		fmt.Println("Erro ao adicionar a nova frase:", err)
 		embedMessages.ErrorEmbedMessage(ctx.Session, ctx.State.SessionID, "Erro ao adicionar a nova frase")
