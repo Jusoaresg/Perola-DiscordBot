@@ -34,7 +34,7 @@ func ListPhrases(ctx *disgolf.Ctx) {
 
 	ctx.InteractionRespond(ctx.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
-		Data: &discordgo.InteractionResponseData{Content: "Aqui estão as suas Pérolas."},
+		Data: &discordgo.InteractionResponseData{Content: "Here are your Pérolas."},
 	})
 
 	// Envia a primeira página
@@ -67,10 +67,10 @@ func createEmbed(page int) *discordgo.MessageEmbed {
 	}
 
 	embed := embedMessages.NewEmbed().
-		SetTitle(fmt.Sprintf("Pérolas (Página %d/%d)", page+1, pageCount)) // Exibe o número da página atual
+		SetTitle(fmt.Sprintf("Pérolas (Pages %d/%d)", page+1, pageCount)) // Exibe o número da página atual
 
 	for i := start; i < end; i++ {
-		msg := fmt.Sprintf("**```%s``` de %s** [salva em %s por %s]",
+		msg := fmt.Sprintf("**```%s``` by %s** [saved on %s by %s]",
 			phrases[i].Phrase,
 			phrases[i].Creator,
 			phrases[i].CreatedAt.Format("02-01-2006 as 3:04PM"),

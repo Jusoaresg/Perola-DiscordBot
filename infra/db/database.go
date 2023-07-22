@@ -26,7 +26,7 @@ func InitDB() (*gorm.DB, error) {
 }
 
 func OpenDb() (*gorm.DB, error) {
-	dsn := "postgres://ozoyzsaq:DN4VL5A1zUhezN1ajN1OP3B2n-03uTMq@motty.db.elephantsql.com/ozoyzsaq"
+	dsn := os.Getenv("DATA_BASE_DSN")
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
 		PreferSimpleProtocol: true,

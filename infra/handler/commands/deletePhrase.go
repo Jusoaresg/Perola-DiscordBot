@@ -25,7 +25,7 @@ func DeletePhrase(ctx *disgolf.Ctx) {
 	if err != nil {
 		//ctx.Reply(fmt.Sprintf("Não foi possivel deletar a frase **%s** de **%s**"), phraseDel, phraseDel)
 		embed := embedMessages.NewEmbed().
-			SetTitle("Erro ao deletar a Pérola").
+			SetTitle("Error while deleting the Pearl Pérola").
 			AddField(phraseDel, subject).
 			SetColor(0xCC0000).MessageEmbed
 		ctx.Session.ChannelMessageSendEmbed(ctx.Interaction.ChannelID, embed)
@@ -33,7 +33,7 @@ func DeletePhrase(ctx *disgolf.Ctx) {
 	}
 
 	embed := embedMessages.NewEmbed().
-		SetTitle("Pérola deleteda com sucesso").
+		SetTitle("Pérola successfully deleted").
 		AddField(phraseDel, subject).
 		SetColor(0x67339B).
 		MessageEmbed

@@ -47,14 +47,14 @@ func AddPhrase(ctx *disgolf.Ctx) {
 	err = database.Save(&guild).Error
 	if err != nil {
 		fmt.Println("Erro ao adicionar a nova frase:", err)
-		embedMessages.ErrorEmbedMessage(ctx.Session, ctx.State.SessionID, "Erro ao adicionar a nova frase")
+		embedMessages.ErrorEmbedMessage(ctx.Session, ctx.State.SessionID, "Error adding new phrase")
 		return
 	}
 
 	//Mensagem de criação de mensagem
 	fmt.Println("Nova frase adicionada com sucesso!")
 	embed := embedMessages.NewEmbed().
-		SetTitle("Pérola adicionada").
+		SetTitle("Pérola added").
 		SetColor(0x00ff00).
 		AddField(phrase, autor).MessageEmbed
 	ctx.Session.ChannelMessageSendEmbed(ctx.State.SessionID, embed)

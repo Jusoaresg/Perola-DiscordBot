@@ -9,12 +9,18 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 )
 
 // INIT: init env variables
 func init() {
-	err := godotenv.Load("./.env")
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Panic("error on get wd", err)
+	}
+	envPath := filepath.Join(cwd, ".env")
+	err = godotenv.Load(envPath)
 	if err != nil {
 		log.Panic(fmt.Errorf("error on loading .env: %w", err))
 	}
