@@ -10,7 +10,7 @@ import (
 
 func deletePerolaRouter(dc *disgolf.Bot) {
 	deleteperolaCommand := &disgolf.Command{
-		Name:        strings.ToLower("deletePerola"),
+		Name:        strings.ToLower("delPerola"),
 		Description: "Deleta uma perola",
 		Type:        discordgo.ChatApplicationCommand,
 		Handler: disgolf.HandlerFunc(func(ctx *disgolf.Ctx) {
