@@ -1,32 +1,20 @@
 package main
 
 import (
-	"DiscordBot/infra/handler"
+	"DiscordBot/config"
+	"DiscordBot/handlers"
 	"fmt"
-	"github.com/FedorLap2006/disgolf"
-	"github.com/bwmarrin/discordgo"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"os/signal"
-	"path/filepath"
 	"syscall"
+
+	"github.com/FedorLap2006/disgolf"
+	"github.com/bwmarrin/discordgo"
 )
 
-// INIT: init env variables
-func init() {
-	cwd, err := os.Getwd()
-	if err != nil {
-		log.Panic("error on get wd", err)
-	}
-	envPath := filepath.Join(cwd, ".env")
-	err = godotenv.Load(envPath)
-	if err != nil {
-		log.Panic(fmt.Errorf("error on loading .env: %w", err))
-	}
-}
-
 func main() {
+	config.InitConfig()
 	dc, err := disgolf.New(os.Getenv("BOT_TOKEN"))
 	if err != nil {
 		log.Panic(fmt.Errorf("failed to create bot: %w", err))
@@ -35,7 +23,7 @@ func main() {
 	dc.Identify.Intents = discordgo.IntentsAll
 
 	//Init Handlers
-	handler.Handlers(dc)
+	handlers.Handlers(dc)
 
 	//Open Discord Bot
 	err = dc.Open()

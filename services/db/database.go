@@ -1,11 +1,12 @@
 package db
 
 import (
-	"DiscordBot/infra/entity"
+	entity "DiscordBot/models"
 	"errors"
+	"os"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
 )
 
 // AutoMigrate caso necessario

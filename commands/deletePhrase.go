@@ -1,10 +1,11 @@
 package commands
 
 import (
-	"DiscordBot/infra/db"
-	"DiscordBot/infra/embedMessages"
-	"DiscordBot/infra/entity"
+	entity "DiscordBot/models"
+	"DiscordBot/services/db"
+	"DiscordBot/services/embedMessages"
 	"fmt"
+
 	"github.com/FedorLap2006/disgolf"
 	"github.com/bwmarrin/discordgo"
 )

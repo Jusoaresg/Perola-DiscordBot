@@ -1,4 +1,4 @@
-package entity
+package models
 
 type GuildEntity struct {
 	ID         int    `gorm:"primaryKey;autoIncrement"`

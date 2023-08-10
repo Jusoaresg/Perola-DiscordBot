@@ -1,11 +1,13 @@
-package handler
+package handlers
 
 import (
-	"DiscordBot/infra/db"
+	"DiscordBot/routers"
+	"DiscordBot/services/db"
 	"fmt"
+	"log"
+
 	"github.com/FedorLap2006/disgolf"
 	"github.com/bwmarrin/discordgo"
-	"log"
 )
 
 func Handlers(dc *disgolf.Bot) {
@@ -32,5 +34,5 @@ func Handlers(dc *disgolf.Bot) {
 		fmt.Printf("Bot entrou no servidor {%s} com ID de {%s}\n", g.Name, g.ID)
 	})
 
-	Routers(dc)
+	routers.Routers(dc)
 }
