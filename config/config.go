@@ -14,7 +14,9 @@ func InitConfig() {
 	if err != nil {
 		log.Panic("error on get wd", err)
 	}
+	// ,/config/bot.env
 	envPath := filepath.Join(cwd, "config/bot.env")
+
 	err = godotenv.Load(envPath)
 	if err != nil {
 		log.Panic(fmt.Errorf("error on loading .env: %w", err))
